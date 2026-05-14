@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text"   parent="" />
+    <style name="Chip"   parent="" />
+    <style name="Card"   parent="" />
+    <style name="Button" parent="" />
+
+    <!-- Tarjeta principal (panel) reproduciendo el look del HTML -->
+    <style name="Card.Panel">
+        <item name="android:background">@drawable/bg_panel</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <!-- Encabezado de panel: título + chip -->
+    <style name="Text.PanelTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Muted" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/muted</item>
+    </style>
+
+    <style name="Text.StatNumber">
+        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Chip.Pill">
+        <item name="android:background">@drawable/bg_chip</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/muted</item>
+    </style>
+
+    <!-- Botones del look del prototipo -->
+    <style name="Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="Button.Soft" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:backgroundTint">#1F2563EB</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="Button.Gray" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:backgroundTint">#15949AB8</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="Button.Warning" parent="Widget.Material3.Button">
+        <item name="backgroundTint">#FFFCE6B5</item>
+        <item name="android:textColor">@color/warning_strong</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="Button.Success" parent="Widget.Material3.Button">
+        <item name="backgroundTint">#2216A34A</item>
+        <item name="android:textColor">@color/success</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+</resources>

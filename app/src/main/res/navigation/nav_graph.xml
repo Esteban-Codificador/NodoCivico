@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- Splash -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.nodocivico.app.ui.splash.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Home -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.nodocivico.app.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_createReportFragment"
+            app:destination="@id/createReportFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_reportListFragment"
+            app:destination="@id/reportListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_syncStatusFragment"
+            app:destination="@id/syncStatusFragment" />
+    </fragment>
+
+    <!-- Lista de reportes -->
+    <fragment
+        android:id="@+id/reportListFragment"
+        android:name="com.nodocivico.app.ui.reports.ReportListFragment"
+        android:label="@string/title_reports"
+        tools:layout="@layout/fragment_report_list">
+        <action
+            android:id="@+id/action_reportListFragment_to_reportDetailFragment"
+            app:destination="@id/reportDetailFragment" />
+        <action
+            android:id="@+id/action_reportListFragment_to_createReportFragment"
+            app:destination="@id/createReportFragment" />
+    </fragment>
+
+    <!-- Detalle -->
+    <fragment
+        android:id="@+id/reportDetailFragment"
+        android:name="com.nodocivico.app.ui.reports.ReportDetailFragment"
+        android:label="@string/title_detail"
+        tools:layout="@layout/fragment_report_detail" />
+
+    <!-- Crear reporte -->
+    <fragment
+        android:id="@+id/createReportFragment"
+        android:name="com.nodocivico.app.ui.reports.CreateReportFragment"
+        android:label="@string/title_create"
+        tools:layout="@layout/fragment_create_report" />
+
+    <!-- Sync -->
+    <fragment
+        android:id="@+id/syncStatusFragment"
+        android:name="com.nodocivico.app.ui.sync.SyncStatusFragment"
+        android:label="@string/title_sync"
+        tools:layout="@layout/fragment_sync_status" />
+
+    <!-- Settings -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.nodocivico.app.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+</navigation>

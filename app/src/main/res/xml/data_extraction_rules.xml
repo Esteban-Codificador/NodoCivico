@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Reservado para Entregable 2/3: definir reglas finas si aplica -->
+    </cloud-backup>
+    <device-transfer>
+        <!-- Mismas reglas para transferencia entre dispositivos -->
+    </device-transfer>
+</data-extraction-rules>

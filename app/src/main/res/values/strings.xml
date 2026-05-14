@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nodo Cívico</string>
+
+    <!-- Hero -->
+    <string name="hero_subtitle">Reportes comunitarios, seguimiento de incidencias y sincronización local/remota.</string>
+    <string name="badge_material">Material style</string>
+    <string name="badge_fragments">Fragments</string>
+    <string name="badge_room_api">Room + API</string>
+
+    <!-- Home -->
+    <string name="title_home">Resumen general</string>
+    <string name="chip_home">Home</string>
+    <string name="stat_total">Reportes totales</string>
+    <string name="stat_pending">Pendientes</string>
+    <string name="stat_synced">Sincronizados</string>
+    <string name="mini_offline_title">Estado offline</string>
+    <string name="mini_offline_body">La app guarda reportes localmente y marca los cambios pendientes de sincronización.</string>
+    <string name="mini_shortcuts_title">Accesos rápidos</string>
+    <string name="mini_shortcuts_body">Crear reporte, revisar estado, consultar recordatorios y ver zonas.</string>
+    <string name="btn_new_report">Nuevo reporte</string>
+    <string name="btn_view_reports">Ver reportes</string>
+    <string name="btn_sync">Sincronizar</string>
+
+    <!-- Lista -->
+    <string name="title_reports">Reportes recientes</string>
+    <string name="chip_list">Lista</string>
+
+    <!-- Detalle -->
+    <string name="title_detail">Detalle del reporte</string>
+    <string name="chip_tracking">Seguimiento</string>
+    <string name="btn_update_status">Actualizar estado</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_reminder">Crear recordatorio</string>
+    <string name="btn_back">Volver</string>
+
+    <!-- Crear -->
+    <string name="title_create">Nuevo reporte</string>
+    <string name="chip_form">Formulario</string>
+    <string name="label_title">Título</string>
+    <string name="hint_title">Resumen breve de la incidencia</string>
+    <string name="label_category">Categoría</string>
+    <string name="label_description">Descripción</string>
+    <string name="hint_description">Describa claramente la incidencia...</string>
+    <string name="label_priority">Prioridad</string>
+    <string name="label_location">Ubicación referencial</string>
+    <string name="hint_location">Sector, bloque o calle</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_save_offline">Guardar offline</string>
+    <string name="btn_cancel">Cancelar</string>
+
+    <!-- Sync -->
+    <string name="title_sync">Sincronización</string>
+    <string name="chip_api">API</string>
+    <string name="card_sent_title">Enviados</string>
+    <string name="card_pending_title">Pendientes</string>
+    <string name="sync_placeholder">Indicador visual de conexión\nLista de pendientes\nBotón de reintento</string>
+    <string name="btn_sync_now">Sincronizar ahora</string>
+
+    <!-- Settings -->
+    <string name="title_settings">Preferencias</string>
+    <string name="chip_settings">Ajustes</string>
+    <string name="label_theme">Tema</string>
+    <string name="label_notifications">Notificaciones</string>
+    <string name="label_status_filter">Filtro por estado</string>
+    <string name="btn_save_changes">Guardar cambios</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_list">Reportes</string>
+    <string name="nav_sync">Sincronizar</string>
+    <string name="nav_settings">Ajustes</string>
+</resources>
