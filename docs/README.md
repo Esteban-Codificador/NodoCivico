@@ -14,7 +14,7 @@
 
 ## Contexto académico
 
-Proyecto final de la asignatura **Aplicaciones Móviles**.
+Proyecto final de la materia **Aplicaciones Móviles**.
 
 - **Institución / programa:** Unidades Tecnologicas de Santander
 - **Docente:** GENNER ANDRÉS CARRILLO RUEDA
@@ -108,21 +108,6 @@ git clone https://github.com/Esteban-Codificador/NodoCivico.git
 cd NodoCivico
 ```
 
-1. Abrir Android Studio → `File → Open…` → seleccionar la carpeta raíz `NodoCivico/` (la que contiene `settings.gradle.kts`).
-2. Aceptar la descarga de Gradle 8.4 cuando lo pida (primera sincronización ~2–4 min).
-3. Crear/seleccionar un emulador en `Device Manager` con API ≥ 26.
-4. Botón **▶ Run 'app'**.
-
-### Solución a problemas comunes
-
-| Problema | Acción |
-|---|---|
-| `SDK location not found` | Crear `local.properties` en la raíz con `sdk.dir=/ruta/al/Android/Sdk`. |
-| `Gradle JDK incorrect` | `File → Settings → Build Tools → Gradle → Gradle JDK = 17 (embedded JBR)`. |
-| Caché de recursos viciada | `Build → Clean Project` → `Build → Rebuild Project`. |
-
----
-
 ## Hoja de ruta
 
 ### Entregable 2 — Persistencia y lógica offline (35 %)
@@ -188,11 +173,11 @@ cd NodoCivico
 
 ## Autores
 
-| Nombre                            | Rol         | Contacto                                                    |
-|-----------------------------------|-------------|-------------------------------------------------------------|
-| Esteban Alberto Avila Corredor    | Estudiante  | eaavila@uts.edu.co / https://github.com/Esteban-Codificador |
-| Juan Sebastian Ropero Amado       | Estuadiante | jsropero@uts.edu.co)                                        |
-| Ariana Alexandra Duran Grimaldos  | Estudiante  | Aalexandraduran@uts.edu.co / https://github.com/Arianaduran25|
+| Nombre                            | Rol         | Contacto                                                      |
+|-----------------------------------|-------------|---------------------------------------------------------------|
+| Esteban Alberto Avila Corredor    | Estudiante  | eaavila@uts.edu.co / https://github.com/Esteban-Codificador   |
+| Juan Sebastian Ropero Amado       | Estuadiante | jsropero@uts.edu.co / https://github.com/JuanSebastian1228)   |
+| Ariana Alexandra Duran Grimaldos  | Estudiante  | Aalexandraduran@uts.edu.co / https://github.com/Arianaduran25 |
 
 
 ---
