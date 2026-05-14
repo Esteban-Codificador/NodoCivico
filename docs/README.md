@@ -154,29 +154,29 @@ cd NodoCivico
 <table>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/screenshots/01-home.jpg" width="240" alt="Pantalla de inicio"/>
+      <img src="screenshots/01-home.jpg" width="240" alt="Pantalla de inicio"/>
       <br/><sub><b>Inicio</b></sub>
       <br/><sub>Resumen general · estado offline · accesos rápidos</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/screenshots/02-reportes.jpg" width="240" alt="Lista de reportes"/>
+      <img src="screenshots/02-reportes.jpg" width="240" alt="Lista de reportes"/>
       <br/><sub><b>Reportes recientes</b></sub>
       <br/><sub>RecyclerView con pills de estado y FAB</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/screenshots/03-nuevo-reporte.jpg" width="240" alt="Formulario de nuevo reporte"/>
+      <img src="screenshots/03-nuevo-reporte.jpg" width="240" alt="Formulario de nuevo reporte"/>
       <br/><sub><b>Nuevo reporte</b></sub>
       <br/><sub>Formulario con validación · guardado offline</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/screenshots/04-sincronizacion.jpg" width="240" alt="Estado de sincronización"/>
+      <img src="screenshots/04-sincronizacion.jpg" width="240" alt="Estado de sincronización"/>
       <br/><sub><b>Sincronización</b></sub>
       <br/><sub>Enviados · cola local · botón de reintento</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/screenshots/05-ajustes.jpg" width="240" alt="Preferencias"/>
+      <img src="screenshots/05-ajustes.jpg" width="240" alt="Preferencias"/>
       <br/><sub><b>Ajustes</b></sub>
       <br/><sub>Tema · notificaciones · filtro por estado</sub>
     </td>
