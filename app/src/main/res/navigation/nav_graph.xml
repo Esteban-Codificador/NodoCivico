@@ -54,7 +54,18 @@
         android:id="@+id/reportDetailFragment"
         android:name="com.nodocivico.app.ui.reports.ReportDetailFragment"
         android:label="@string/title_detail"
-        tools:layout="@layout/fragment_report_detail" />
+        tools:layout="@layout/fragment_report_detail">
+        <argument
+            android:name="reportId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_reportDetailFragment_to_editReportFragment"
+            app:destination="@id/editReportFragment" />
+        <action
+            android:id="@+id/action_reportDetailFragment_to_calendarRemindersFragment"
+            app:destination="@id/calendarRemindersFragment" />
+    </fragment>
 
     <!-- Crear reporte -->
     <fragment
@@ -62,6 +73,25 @@
         android:name="com.nodocivico.app.ui.reports.CreateReportFragment"
         android:label="@string/title_create"
         tools:layout="@layout/fragment_create_report" />
+
+    <!-- Editar reporte -->
+    <fragment
+        android:id="@+id/editReportFragment"
+        android:name="com.nodocivico.app.ui.reports.EditReportFragment"
+        android:label="Editar reporte"
+        tools:layout="@layout/fragment_edit_report">
+        <argument
+            android:name="reportId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <!-- Recordatorios -->
+    <fragment
+        android:id="@+id/calendarRemindersFragment"
+        android:name="com.nodocivico.app.ui.reminders.CalendarRemindersFragment"
+        android:label="Recordatorios"
+        tools:layout="@layout/fragment_calendar_reminders" />
 
     <!-- Sync -->
     <fragment
