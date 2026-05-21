@@ -25,10 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Splash screen del sistema (Android 12+). En versiones anteriores
-        // muestra un fallback simple con el ícono y el color de marca.
         installSplashScreen()
-        // Aplicar el tema final antes de inflar la UI (evita el flash blanco).
         setTheme(R.style.Theme_NodoCivico)
         super.onCreate(savedInstanceState)
 
@@ -42,28 +39,16 @@ class MainActivity : AppCompatActivity() {
         val bottomNav: BottomNavigationView = binding.bottomNavigation
         bottomNav.setupWithNavController(navController)
 
-        // El splash y el detalle no deben mostrar bottom navigation.
+        // Ocultar bottom nav en pantallas que no son top-level
         navController.addOnDestinationChangedListener { _, destination, _ ->
             bottomNav.visibility = when (destination.id) {
                 R.id.splashFragment,
                 R.id.reportDetailFragment,
-                R.id.createReportFragment -> android.view.View.GONE
+                R.id.createReportFragment,
+                R.id.editReportFragment,
+                R.id.calendarRemindersFragment -> android.view.View.GONE
                 else -> android.view.View.VISIBLE
             }
         }
-
-        // Top-level destinations: en estas pantallas no aparece la flecha de back.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment,
-                R.id.reportListFragment,
-                R.id.syncStatusFragment,
-                R.id.settingsFragment
-            )
-        )
-        // El layout no usa Toolbar en el Entregable 1: la toolbar se añadirá
-        // en el Entregable 2 cuando ya haya un flujo CRUD completo.
-        @Suppress("UNUSED_VARIABLE")
-        val unused = appBarConfiguration
     }
 }

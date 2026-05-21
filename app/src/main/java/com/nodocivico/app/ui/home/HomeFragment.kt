@@ -5,27 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.nodocivico.app.R
-import com.nodocivico.app.data.model.ReportStatus
-import com.nodocivico.app.data.model.SampleData
 import com.nodocivico.app.databinding.FragmentHomeBinding
+import com.nodocivico.app.ui.viewmodel.ReportListViewModel
+import com.nodocivico.app.ui.viewmodel.ReportListUiState
+import kotlinx.coroutines.launch
 
-/**
- * Pantalla principal (Resumen general).
- *
- * Reproduce el panel "Resumen general" del prototipo HTML:
- *  - tres tarjetas de estadísticas (totales, pendientes, sincronizados)
- *  - dos tarjetas informativas (estado offline, accesos rápidos)
- *  - botones de navegación rápida hacia las otras secciones
- *
- * Para el Entregable 1 los números provienen de [SampleData]. En el
- * Entregable 2 se calcularán a partir de Room mediante consultas count(*).
- */
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: ReportListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,14 +34,32 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val reports = SampleData.sampleReports
-        val total = reports.size
-        val pending = reports.count { it.pendingSync || it.status != ReportStatus.CERRADO }
-        val synced = reports.count { !it.pendingSync }
-
-        binding.tvStatTotal.text = total.toString()
-        binding.tvStatPending.text = pending.toString()
-        binding.tvStatSynced.text = synced.toString()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is ReportListUiState.Loading -> {
+                            binding.tvStatTotal.text = "…"
+                            binding.tvStatPending.text = "…"
+                            binding.tvStatSynced.text = "…"
+                        }
+                        is ReportListUiState.Empty -> {
+                            binding.tvStatTotal.text = "0"
+                            binding.tvStatPending.text = "0"
+                            binding.tvStatSynced.text = "0"
+                        }
+                        is ReportListUiState.Success -> {
+                            val reports = state.reports
+                            binding.tvStatTotal.text = reports.size.toString()
+                            binding.tvStatPending.text =
+                                reports.count { it.pendingSync }.toString()
+                            binding.tvStatSynced.text =
+                                reports.count { !it.pendingSync }.toString()
+                        }
+                    }
+                }
+            }
+        }
 
         binding.btnNewReport.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_createReportFragment)

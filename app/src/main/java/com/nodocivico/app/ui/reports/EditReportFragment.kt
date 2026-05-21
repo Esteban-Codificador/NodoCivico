@@ -11,26 +11,28 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.nodocivico.app.data.model.Priority
 import com.nodocivico.app.data.model.SampleData
-import com.nodocivico.app.databinding.FragmentCreateReportBinding
-import com.nodocivico.app.ui.viewmodel.CreateReportViewModel
+import com.nodocivico.app.databinding.FragmentEditReportBinding
+import com.nodocivico.app.ui.viewmodel.EditReportViewModel
 import com.nodocivico.app.ui.viewmodel.SaveResult
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
-class CreateReportFragment : Fragment() {
+class EditReportFragment : Fragment() {
 
-    private var _binding: FragmentCreateReportBinding? = null
+    private var _binding: FragmentEditReportBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CreateReportViewModel by viewModels()
+    private val viewModel: EditReportViewModel by viewModels()
+    private val args: EditReportFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCreateReportBinding.inflate(inflater, container, false)
+        _binding = FragmentEditReportBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -47,6 +49,26 @@ class CreateReportFragment : Fragment() {
             requireContext(), android.R.layout.simple_spinner_dropdown_item, priorities
         )
 
+        viewModel.load(args.reportId)
+
+        // Llenar campos con datos actuales del reporte
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.report.collect { report ->
+                    report ?: return@collect
+                    binding.etTitle.setText(report.title)
+                    binding.etDescription.setText(report.description)
+                    binding.etLocation.setText(report.location)
+
+                    val catIndex = SampleData.categories.indexOfFirst { it.id == report.categoryId }
+                    if (catIndex >= 0) binding.spinnerCategory.setSelection(catIndex)
+
+                    val priIndex = Priority.values().indexOfFirst { it == report.priority }
+                    if (priIndex >= 0) binding.spinnerPriority.setSelection(priIndex)
+                }
+            }
+        }
+
         // Observar resultado del guardado
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -55,7 +77,7 @@ class CreateReportFragment : Fragment() {
                         is SaveResult.Success -> {
                             Snackbar.make(
                                 binding.root,
-                                "Reporte guardado correctamente.",
+                                "Reporte actualizado correctamente.",
                                 Snackbar.LENGTH_SHORT
                             ).show()
                             findNavController().popBackStack()
@@ -72,12 +94,11 @@ class CreateReportFragment : Fragment() {
             }
         }
 
-        binding.btnSave.setOnClickListener { handleSave(offline = false) }
-        binding.btnSaveOffline.setOnClickListener { handleSave(offline = true) }
+        binding.btnUpdate.setOnClickListener { handleUpdate() }
         binding.btnCancel.setOnClickListener { findNavController().popBackStack() }
     }
 
-    private fun handleSave(offline: Boolean) {
+    private fun handleUpdate() {
         val title = binding.etTitle.text?.toString()?.trim().orEmpty()
         val description = binding.etDescription.text?.toString()?.trim().orEmpty()
         val location = binding.etLocation.text?.toString()?.trim().orEmpty()
@@ -110,13 +131,12 @@ class CreateReportFragment : Fragment() {
         val categoryId = SampleData.categories[binding.spinnerCategory.selectedItemPosition].id
         val priority = Priority.values()[binding.spinnerPriority.selectedItemPosition]
 
-        viewModel.save(
+        viewModel.update(
             title = title,
             description = description,
             categoryId = categoryId,
             priority = priority,
-            location = location,
-            offline = offline
+            location = location
         )
     }
 

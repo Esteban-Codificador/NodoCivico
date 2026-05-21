@@ -1,20 +1,24 @@
 package com.nodocivico.app
 
 import android.app.Application
+import com.nodocivico.app.data.local.AppDatabase
+import com.nodocivico.app.data.repository.ReportRepository
 
-/**
- * Punto de arranque global de la aplicación.
- *
- * Para el Entregable 1 no se inicializa nada todavía: el objetivo es dejar
- * declarada la clase Application para que en el Entregable 2 se pueda enganchar
- * aquí la base de datos Room (singleton) y en el Entregable 3 el cliente HTTP
- * y los BroadcastReceiver dinámicos.
- */
 class NodoCivicoApp : Application() {
+
+    // Instancia única de la base de datos accesible desde toda la app
+    val database: AppDatabase by lazy {
+        AppDatabase.getInstance(this)
+    }
+
+    // Repositorio accesible desde los ViewModels vía la Application
+    val reportRepository: ReportRepository by lazy {
+        ReportRepository(database)
+    }
 
     override fun onCreate() {
         super.onCreate()
-        // TODO Entregable 2: inicializar Room (AppDatabase)
-        // TODO Entregable 3: inicializar cliente HTTP y registrar ConnectivityReceiver
+        // Room se inicializa de forma lazy la primera vez que se accede
+        // TODO Entregable 3: inicializar cliente HTTP y ConnectivityReceiver
     }
 }
