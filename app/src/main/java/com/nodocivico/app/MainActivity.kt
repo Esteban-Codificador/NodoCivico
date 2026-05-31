@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setupWithNavController(navController)
 
+        // Ocultar bottom nav en pantallas que no son top-level
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             bottomNav.visibility = when (destination.id) {
