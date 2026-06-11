@@ -34,18 +34,28 @@ class CreateReportViewModel(application: Application) : AndroidViewModel(applica
         offline: Boolean
     ) {
         viewModelScope.launch {
+            val now = System.currentTimeMillis()
             val report = Report(
                 id = "0",
                 title = title,
                 description = description,
                 categoryId = categoryId,
                 priority = priority,
-                status = ReportStatus.ABIERTO,
+                status = ReportStatus.OPEN,
                 location = location,
-                createdAtMillis = System.currentTimeMillis(),
-                pendingSync = offline
+                createdAtMillis = now,
+                updatedAtMillis = now,
+                pendingSync = true
             )
             repository.insert(report)
+
+            // Si no es modo offline, intentar sincronizar inmediatamente
+            if (!offline) {
+                try {
+                    repository.sync()
+                } catch (_: Exception) {}
+            }
+
             _saveResult.emit(SaveResult.Success)
         }
     }

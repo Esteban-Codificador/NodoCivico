@@ -12,6 +12,12 @@ interface ReportDao {
     @Query("SELECT * FROM reports WHERE id = :id")
     suspend fun getById(id: Int): ReportEntity?
 
+    @Query("SELECT * FROM reports WHERE remoteId = :remoteId")
+    suspend fun getByRemoteId(remoteId: String): ReportEntity?
+
+    @Query("SELECT * FROM reports WHERE pendingSync = 1")
+    suspend fun getPendingSync(): List<ReportEntity>
+
     @Query("SELECT COUNT(*) FROM reports")
     fun countAll(): Flow<Int>
 

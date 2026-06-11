@@ -6,17 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.nodocivico.app.data.model.SampleData
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.nodocivico.app.NodoCivicoApp
 import com.nodocivico.app.databinding.FragmentSyncStatusBinding
+import kotlinx.coroutines.launch
 
-/**
- * Estado de sincronización.
- *
- * Equivale al panel "Sincronización" del prototipo HTML. Muestra cuántos
- * reportes están enviados y cuántos siguen pendientes. En el Entregable 3
- * esta pantalla se conectará al ConnectivityReceiver y al cliente de API
- * para reflejar el estado real y permitir reintentos.
- */
 class SyncStatusFragment : Fragment() {
 
     private var _binding: FragmentSyncStatusBinding? = null
@@ -34,19 +30,47 @@ class SyncStatusFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val reports = SampleData.sampleReports
-        val sent = reports.count { !it.pendingSync }
-        val pending = reports.count { it.pendingSync }
+        val repository = (requireActivity().application as NodoCivicoApp).reportRepository
 
-        binding.tvSent.text = "$sent reportes sincronizados con el servidor."
-        binding.tvPending.text = "$pending cambios quedan en cola local."
+        // Observar contadores reales de Room
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    repository.countSynced.collect { count ->
+                        binding.tvSent.text = "$count reportes sincronizados con el servidor."
+                    }
+                }
+                launch {
+                    repository.countPending.collect { count ->
+                        binding.tvPending.text = "$count cambios quedan en cola local."
+                    }
+                }
+            }
+        }
 
         binding.btnSyncNow.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "La sincronización real se implementa en el Entregable 3.",
-                Toast.LENGTH_SHORT
-            ).show()
+            binding.btnSyncNow.isEnabled = false
+            binding.btnSyncNow.text = "Sincronizando..."
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    val result = repository.sync()
+                    Toast.makeText(
+                        requireContext(),
+                        "Subidos: ${result.pushed} | Descargados: ${result.pulled} | Errores: ${result.errors}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error de sincronizacion: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } finally {
+                    binding.btnSyncNow.isEnabled = true
+                    binding.btnSyncNow.text = "Sincronizar ahora"
+                }
+            }
         }
     }
 

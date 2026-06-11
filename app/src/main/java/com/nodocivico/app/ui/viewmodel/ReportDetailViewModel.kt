@@ -28,13 +28,13 @@ class ReportDetailViewModel(application: Application) : AndroidViewModel(applica
     fun cycleStatus() {
         val current = _report.value ?: return
         val next = when (current.status) {
-            ReportStatus.ABIERTO    -> ReportStatus.EN_PROCESO
-            ReportStatus.EN_PROCESO -> ReportStatus.CERRADO
-            ReportStatus.CERRADO    -> ReportStatus.ABIERTO
+            ReportStatus.OPEN        -> ReportStatus.IN_PROGRESS
+            ReportStatus.IN_PROGRESS -> ReportStatus.RESOLVED
+            ReportStatus.RESOLVED    -> ReportStatus.CLOSED
+            ReportStatus.CLOSED      -> ReportStatus.OPEN
         }
         viewModelScope.launch {
-            val updated = current.copy(status = next)
-            repository.update(updated)
+            val updated = repository.updateStatus(current, next)
             _report.value = updated
         }
     }
