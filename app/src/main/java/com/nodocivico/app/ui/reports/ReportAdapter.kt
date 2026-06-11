@@ -50,9 +50,10 @@ class ReportAdapter(
 
             binding.tvStatus.text = report.status.label
             val (bgRes, fgRes) = when (report.status) {
-                ReportStatus.ABIERTO    -> R.drawable.bg_status_open     to R.color.status_open_fg
-                ReportStatus.EN_PROCESO -> R.drawable.bg_status_progress  to R.color.status_progress_fg
-                ReportStatus.CERRADO    -> R.drawable.bg_status_closed    to R.color.status_closed_fg
+                ReportStatus.OPEN        -> R.drawable.bg_status_open      to R.color.status_open_fg
+                ReportStatus.IN_PROGRESS -> R.drawable.bg_status_progress  to R.color.status_progress_fg
+                ReportStatus.RESOLVED    -> R.drawable.bg_status_closed    to R.color.status_closed_fg
+                ReportStatus.CLOSED      -> R.drawable.bg_status_closed    to R.color.status_closed_fg
             }
             binding.tvStatus.background =
                 ContextCompat.getDrawable(binding.root.context, bgRes)

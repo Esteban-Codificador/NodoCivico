@@ -60,7 +60,7 @@ class EditReportFragment : Fragment() {
                     binding.etDescription.setText(report.description)
                     binding.etLocation.setText(report.location)
 
-                    val catIndex = SampleData.categories.indexOfFirst { it.id == report.categoryId }
+                    val catIndex = SampleData.categories.indexOfFirst { it.id == report.categoryId || it.name == report.categoryId }
                     if (catIndex >= 0) binding.spinnerCategory.setSelection(catIndex)
 
                     val priIndex = Priority.values().indexOfFirst { it == report.priority }

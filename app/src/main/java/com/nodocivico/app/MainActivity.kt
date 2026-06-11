@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nodocivico.app.databinding.ActivityMainBinding
-import com.nodocivico.app.network.Post
 import com.nodocivico.app.network.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,35 +29,30 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ---------------- API REST ----------------
-
-        RetrofitClient.api.getPosts().enqueue(object : Callback<List<Post>> {
-
-            override fun onResponse(
-                call: Call<List<Post>>,
-                response: Response<List<Post>>
-            ) {
-
+        // Verificar conectividad con la API al iniciar
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitClient.api.health()
                 if (response.isSuccessful) {
-
-                    Log.d(
-                        "API_TEST",
-                        "Posts obtenidos: ${response.body()?.size}"
-                    )
+                    Log.d("API", "API activa: ${response.body()}")
+                } else {
+                    Log.w("API", "API respondio con codigo: ${response.code()}")
                 }
+            } catch (e: Exception) {
+                Log.e("API", "No se pudo conectar a la API: ${e.message}")
             }
+        }
 
-            override fun onFailure(
-                call: Call<List<Post>>,
-                t: Throwable
-            ) {
-
-                Log.e(
-                    "API_TEST",
-                    "Error API: ${t.message}"
-                )
+        // Sincronizar al iniciar la app
+        val repository = (application as NodoCivicoApp).reportRepository
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val result = repository.sync()
+                Log.d("API", "Sync inicial: pushed=${result.pushed}, pulled=${result.pulled}")
+            } catch (e: Exception) {
+                Log.e("API", "Error en sync inicial: ${e.message}")
             }
-        })
+        }
 
         // ---------------- Navigation ----------------
 
@@ -71,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setupWithNavController(navController)
 
-        // Ocultar bottom nav en pantallas que no son top-level
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             bottomNav.visibility = when (destination.id) {

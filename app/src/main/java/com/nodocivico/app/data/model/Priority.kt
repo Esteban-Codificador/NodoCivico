@@ -8,7 +8,7 @@ package com.nodocivico.app.data.model
  * de dominio en memoria.
  */
 enum class Priority(val label: String) {
-    BAJA("Baja"),
+    LOW("Baja"),
     MEDIA("Media"),
     ALTA("Alta");
 
